@@ -1,4 +1,7 @@
 { pkgs, unstable, ... }:
+let
+  pass-wayland-custom = pkgs.pass-wayland.withExtensions (exts: [ exts.pass-otp ]);
+in
 {
   config = {
     environment.systemPackages = with pkgs; [
@@ -15,10 +18,9 @@
       rclone
       fzf
       z-lua
-      gnupg
       gcc
       go
-      pass
+      pass-wayland-custom
       lshw
       unzip
       pavucontrol
@@ -36,6 +38,7 @@
       vivaldi
       nil
       nixfmt-rfc-style
+      gcr
     ];
   };
 }

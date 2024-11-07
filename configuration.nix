@@ -2,12 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{
-  config,
-  pkgs,
-  unstable,
-  ...
-}:
+{ config, pkgs, ... }:
 
 let
   system = "x86_64-linux";
@@ -140,42 +135,6 @@ in
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    bat
-    wget
-    chezmoi
-    git
-    git-lfs
-    alacritty
-    tmux
-    nodejs
-    jq
-    waybar
-    rclone
-    fzf
-    z-lua
-    gnupg
-    gcc
-    go
-    pass
-    lshw
-    unzip
-    pavucontrol
-    networkmanagerapplet
-    pritunl-client
-    SDL2
-    SDL2_ttf
-    SDL2_image
-    ripgrep
-    lua-language-server
-    python312
-    unstable.ruff-lsp
-    unstable.pyright
-    unstable.neovim
-    vivaldi
-    nil
-    nixfmt-rfc-style
-  ];
 
   fonts.packages = with pkgs; [
     noto-fonts
@@ -195,11 +154,12 @@ in
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+    pinentryPackage = pkgs.pinentry-gnome3;
+  };
+  # services.gnome.gnome-keyring.enable = true;
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
