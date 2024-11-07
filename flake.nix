@@ -1,6 +1,10 @@
 {
   inputs = {
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -33,6 +37,7 @@
         modules = [
           ./configuration.nix
           ./system-packages.nix
+          inputs.home-manager.nixosModules.default
         ];
       };
     };
