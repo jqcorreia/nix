@@ -80,6 +80,10 @@ in
     xwayland.enable = true;
   };
 
+  programs.hyprlock = {
+    enable = true;
+  };
+
   ## PIPEWIRE
   # rtkit is optional but recommended
   security.rtkit.enable = true;

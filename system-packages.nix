@@ -39,6 +39,7 @@ in
       nil
       nixfmt-rfc-style
       gcr
+      home-manager
     ];
   };
 }
