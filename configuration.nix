@@ -49,10 +49,10 @@ in
     LC_TIME = "pt_PT.UTF-8";
   };
 
-  programs.zsh = {
-    enable = true;
-    promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-  };
+  # programs.zsh = {
+  #   enable = true;
+  #   promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+  # };
 
   # Configure console keymap
   console.keyMap = "pt-latin1";
@@ -66,10 +66,7 @@ in
       "wheel"
     ];
     shell = pkgs.zsh;
-    packages = with pkgs; [
-      zsh-syntax-highlighting
-      zsh-powerlevel10k
-    ];
+    ignoreShellProgramCheck = true;
   };
 
   # Allow unfree packages
@@ -143,6 +140,7 @@ in
   fonts.packages = with pkgs; [
     noto-fonts
     font-awesome
+    powerline-fonts
   ];
 
   services.openssh.enable = true;

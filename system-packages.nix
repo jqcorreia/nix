@@ -1,7 +1,4 @@
 { pkgs, unstable, ... }:
-let
-  pass-wayland-custom = pkgs.pass-wayland.withExtensions (exts: [ exts.pass-otp ]);
-in
 {
   config = {
     environment.systemPackages = with pkgs; [
@@ -16,11 +13,9 @@ in
       jq
       waybar
       rclone
-      fzf
-      z-lua
       gcc
       go
-      pass-wayland-custom
+      (pkgs.pass-wayland.withExtensions (exts: [ exts.pass-otp ]))
       lshw
       unzip
       pavucontrol

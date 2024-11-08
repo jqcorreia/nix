@@ -17,7 +17,13 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
+  home.packages = with pkgs; [
+    fzf
+    z-lua
+    grim
+    slurp
+    wl-clipboard
+
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
 
@@ -67,7 +73,7 @@
   #  /etc/profiles/per-user/jqcorreia/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "nvim";
   };
 
   # Let Home Manager install and manage itself.
@@ -75,9 +81,26 @@
 
   programs.zsh = {
     enable = true;
+    syntaxHighlighting = {
+      enable = true;
+    };
     initExtra = ''
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+      source ${pkgs.fzf}/share/fzf/key-bindings.zsh
+      # source ${pkgs.z-lua}/share/z/z.sh
       source ${./.p10k.zsh.bak}
+      source ${./functions.zsh}
     '';
+    shellAliases = {
+      nano = "nvim";
+      vi = "nvim";
+      cat = "bat -pp";
+      pos = "poetry shell";
+      gi = "git";
+      ls = "ls --color=auto";
+      pbcopy = "xsel --clipboard --input";
+      pbpaste = "xsel --clipboard --output";
+      chez = "chezmoi";
+    };
   };
 }

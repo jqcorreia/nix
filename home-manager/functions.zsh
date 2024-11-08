@@ -55,3 +55,15 @@ function vpn() {
     fi
 }
 
+
+function tma() {
+    tmux new -As $1
+}
+
+function tml() {
+    tmux ls
+}
+
+function nvc() {
+    nvim ~/.config/nvim/init.lua
+}
