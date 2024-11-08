@@ -35,6 +35,8 @@
       nixfmt-rfc-style
       gcr
       home-manager
+      phinger-cursors
+      sddm
     ];
   };
 }

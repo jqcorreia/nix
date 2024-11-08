@@ -19,7 +19,6 @@
   # environment.
   home.packages = with pkgs; [
     fzf
-    z-lua
     grim
     slurp
     wl-clipboard
@@ -84,6 +83,7 @@
     syntaxHighlighting = {
       enable = true;
     };
+    defaultKeymap = "emacs";
     initExtra = ''
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       source ${pkgs.fzf}/share/fzf/key-bindings.zsh
@@ -91,6 +91,7 @@
       source ${./.p10k.zsh.bak}
       source ${./functions.zsh}
     '';
+
     shellAliases = {
       nano = "nvim";
       vi = "nvim";
@@ -102,5 +103,10 @@
       pbpaste = "xsel --clipboard --output";
       chez = "chezmoi";
     };
+  };
+
+  programs.z-lua = {
+    enable = true;
+    enableZshIntegration = true;
   };
 }
