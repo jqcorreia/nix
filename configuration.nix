@@ -26,6 +26,7 @@ in
 
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.nameservers = [ "8.8.8.8" ];
 
   # Enable bluetooth
   hardware.bluetooth.enable = true;
@@ -101,6 +102,15 @@ in
 
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = [ "nvidia" ];
+  services.displayManager = {
+    defaultSession = "hyprland";
+    sddm = {
+      enable = true;
+      wayland = {
+        enable = true;
+      };
+    };
+  };
 
   hardware.nvidia = {
 
@@ -140,7 +150,7 @@ in
   fonts.packages = with pkgs; [
     noto-fonts
     font-awesome
-    powerline-fonts
+    nerdfonts
   ];
 
   services.openssh.enable = true;
