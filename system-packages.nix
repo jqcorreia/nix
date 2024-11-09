@@ -36,7 +36,6 @@
       gcr
       home-manager
       phinger-cursors
-      dunst
       dig
     ];
   };

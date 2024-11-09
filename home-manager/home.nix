@@ -125,4 +125,12 @@
     enable = true;
     enableZshIntegration = true;
   };
+  services.dunst = {
+    enable = true;
+    settings = {
+      global = {
+        transparency = 9;
+      };
+    };
+  };
 }
