@@ -36,7 +36,8 @@
       gcr
       home-manager
       phinger-cursors
-      sddm
+      dunst
+      dig
     ];
   };
 }
