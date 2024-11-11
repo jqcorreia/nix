@@ -37,6 +37,8 @@
       home-manager
       phinger-cursors
       dig
+      libsForQt5.qt5.qtgraphicaleffects
+      nix-prefetch
     ];
   };
 }

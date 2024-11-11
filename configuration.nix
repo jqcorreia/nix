@@ -2,10 +2,15 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  unstable,
+  ...
+}:
 
 let
-  system = "x86_64-linux";
+  sddm-theme = import ./sddm-theme.nix { inherit pkgs; };
 in
 {
   imports = [
@@ -109,6 +114,7 @@ in
       wayland = {
         enable = true;
       };
+      theme = "${sddm-theme}";
     };
   };
 
