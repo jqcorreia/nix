@@ -11,7 +11,7 @@
       size = 10
 
       [font.normal]
-      family = "DejaVuSansM Nerd Font"
+      family = "DejaVuSansM Nerd Font" # Make sure to add 'nerdfonts' to the fonts.packages in configuration.nix
 
       [window]
       opacity = 0.85
