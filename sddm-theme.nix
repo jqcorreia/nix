@@ -1,6 +1,9 @@
 # allow our nixpkgs import to be overridden if desired
 { pkgs, ... }:
 
+let
+  customization = ./sddm;
+in
 # let's write an actual basic derivation
 # this uses the standard nixpkgs mkDerivation function
 pkgs.stdenv.mkDerivation {
@@ -31,6 +34,8 @@ pkgs.stdenv.mkDerivation {
     mkdir $out
     cp -R $src/* $out
     rm $out/Background.jpg
-    cp ${./sddm-tron.png} $out/Background.jpg
+    rm $out/theme.conf
+    rm $out/Main.qml
+    cp -R ${customization}/* $out/
   '';
 }

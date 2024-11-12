@@ -135,4 +135,11 @@
       };
     };
   };
+  gtk = {
+    enable = true;
+    iconTheme = {
+      name = "Fluent";
+      package = pkgs.fluent-gtk-theme;
+    };
+  };
 }
