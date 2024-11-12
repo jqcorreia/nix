@@ -7,7 +7,6 @@
       chezmoi
       git
       git-lfs
-      alacritty
       tmux
       nodejs
       jq
