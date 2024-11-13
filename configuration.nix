@@ -2,20 +2,15 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{
-  config,
-  pkgs,
-  unstable,
-  ...
-}:
+{ config, pkgs, ... }:
 
 let
   sddm-theme = import ./sddm-theme.nix { inherit pkgs; };
 in
 {
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./system-packages.nix
   ];
 
   # Bootloader.
@@ -23,11 +18,6 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "vertex"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -56,6 +46,12 @@ in
   };
 
   # Configure console keymap
+  # Set xkb features in order to have the same configuration in console by using console.useXkbConfig
+  services.xserver.xkb = {
+    layout = "pt";
+    options = "ctrl:nocaps";
+
+  };
   console.useXkbConfig = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -78,11 +74,6 @@ in
     xwayland.enable = true;
   };
 
-  programs.hyprlock = {
-    enable = true;
-  };
-
-  ## PIPEWIRE
   # rtkit is optional but recommended
   security.rtkit.enable = true;
   services.pipewire = {
@@ -94,7 +85,6 @@ in
 
   services.blueman.enable = true;
 
-  ## GRAPHICS
   # Enable OpenGL
   hardware.opengl = {
     enable = true;
@@ -102,13 +92,6 @@ in
 
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = [ "nvidia" ];
-
-  # Set xkb features in order to have the same configuration in console by using console.useXkbConfig
-  services.xserver.xkb = {
-    layout = "pt";
-    options = "ctrl:nocaps";
-
-  };
 
   services.displayManager = {
     defaultSession = "hyprland";
@@ -163,6 +146,7 @@ in
   ];
 
   services.openssh.enable = true;
+
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
