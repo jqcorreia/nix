@@ -10,7 +10,7 @@
     initExtra = ''
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       source ${pkgs.fzf}/share/fzf/key-bindings.zsh
-      source ${./.p10k.zsh.bak}
+      source ${./.p10k.zsh}
       source ${./functions.zsh}
 
       # Add some standard keybinding not present in the default keymap
