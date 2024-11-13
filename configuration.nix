@@ -55,13 +55,8 @@ in
     LC_TIME = "pt_PT.UTF-8";
   };
 
-  # programs.zsh = {
-  #   enable = true;
-  #   promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-  # };
-
   # Configure console keymap
-  console.keyMap = "pt-latin1";
+  console.useXkbConfig = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.jqcorreia = {
@@ -107,6 +102,14 @@ in
 
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = [ "nvidia" ];
+
+  # Set xkb features in order to have the same configuration in console by using console.useXkbConfig
+  services.xserver.xkb = {
+    layout = "pt";
+    options = "ctrl:nocaps";
+
+  };
+
   services.displayManager = {
     defaultSession = "hyprland";
     sddm = {
@@ -177,6 +180,13 @@ in
     enableSSHSupport = true;
     pinentryPackage = pkgs.pinentry-gnome3;
   };
+  systemd = {
+    packages = [ pkgs.pritunl-client ];
+    targets.multi-user.wants = [ "pritunl-client.service" ];
+  };
+
+  # virtualisation.vmware.guest.enable = true
+
   # services.gnome.gnome-keyring.enable = true;
   # List services that you want to enable:
 

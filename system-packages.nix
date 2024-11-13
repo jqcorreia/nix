@@ -29,6 +29,7 @@
       unstable.ruff-lsp
       unstable.pyright
       unstable.neovim
+      unstable.terraform-ls
       vivaldi
       nil
       nixfmt-rfc-style
@@ -38,6 +39,8 @@
       dig
       libsForQt5.qt5.qtgraphicaleffects
       nix-prefetch
+      terraform
+      bitwarden-cli
     ];
   };
 }
