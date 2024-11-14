@@ -10,15 +10,12 @@
       tmux
       nodejs
       jq
-      waybar
       rclone
       gcc
       go
       (pkgs.pass-wayland.withExtensions (exts: [ exts.pass-otp ]))
       lshw
       unzip
-      pavucontrol
-      networkmanagerapplet
       pritunl-client
       SDL2
       SDL2_ttf
@@ -30,12 +27,10 @@
       unstable.pyright
       unstable.neovim
       unstable.terraform-ls
-      vivaldi
       nil
       nixfmt-rfc-style
       gcr
       home-manager
-      phinger-cursors
       dig
       libsForQt5.qt5.qtgraphicaleffects
       nix-prefetch
