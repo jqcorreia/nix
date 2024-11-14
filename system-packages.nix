@@ -37,7 +37,6 @@
       terraform
       bitwarden-cli
       vivaldi
-      waybar
     ];
   };
 }
