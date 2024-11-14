@@ -36,6 +36,8 @@
       nix-prefetch
       terraform
       bitwarden-cli
+      vivaldi
+      waybar
     ];
   };
 }

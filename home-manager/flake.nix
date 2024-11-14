@@ -3,7 +3,7 @@
 
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -12,19 +12,34 @@
   };
 
   outputs =
-    { nixpkgs, home-manager, ... }:
+    { nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      unstable = inputs.unstable {
-        inherit system;
-        config.allowUnfree = true;
-      };
+      legacyPackages =
+        nixpkgs.lib.genAttrs
+          [
+            "x86_64-linux"
+            "x86_64-darwin"
+          ]
+          (
+            system:
+            import inputs.unstable {
+              inherit system;
+              # NOTE: Using `nixpkgs.config` in your NixOS config won't work
+              # Instead, you should set nixpkgs configs here
+              # (https://nixos.org/manual/nixpkgs/stable/#idm140737322551056)
+
+              config.allowUnfree = true;
+            }
+          );
     in
     {
       homeConfigurations."jqcorreia" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        specialArgs = { unstable = unstable.x86_64-linux }
+        extraSpecialArgs = {
+          unstable = legacyPackages.x86_64-linux;
+        };
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.

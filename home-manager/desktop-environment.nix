@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, ... }:
 
 {
   home.packages = with pkgs; [
@@ -9,13 +9,19 @@
     smplayer
     networkmanagerapplet
     pavucontrol
-    vivaldi
     phinger-cursors
   ];
 
-  programs.waybar = {
-    enable = true;
-    settings = builtins.readFile ./.config/waybar/config.jsonc;
-    styles = builtins.readFile ./.config/waybar/styles.css;
+  # programs.waybar = {
+  #   enable = true;
+
+  #   # Need to set settings directly by file since JSONC isn't supported and we don't 
+  #   # want to miss the comments capacity
+  #   style = builtins.readFile ./.config/waybar/style.css;
+  # };
+
+  home.file = {
+    "./.config/waybar/config.jsonc".text = builtins.readFile ./.config/waybar/config.jsonc;
+    "./.config/waybar/style.css".text = builtins.readFile ./.config/waybar/style.css;
   };
 }
