@@ -8,9 +8,15 @@ Problems:
 - icon theme not set, dunno why
 - sometimes blueman manager doesn't open from the applet due to, it seems, some dbus stuff that needs to happen
 - Unstable errors:
-    - vivaldi
-    - hyprland
+    - hyprland - 0.45
 
 Solved:
-- using nix-shell inside a rust project with rust analizer changes env vars resulting in recompilation of packages (e.g ring and rusttls). Installing the packages `cargo` and `rust-analyzer` inside the shell solves this. Should not use `rustup`
+- using nix-shell inside a rust project with rust analizer changes env vars resulting in recompilation of packages (e.g ring and rusttls). See Rust instruction below.
+- Vivaldi unstable - needed installation of `mesa` unstable because of libgbm
 
+# Rust
+Use `rustup` nix package and manually install toolchain and rust-analyzer
+- `rustup toolchain install stable-x86_64-unknown-linux-gnu`
+- `rustup component add rust-analyzer`
+
+Create a `shell.nix` file stating the runtime dependencies (if you have them) and build it from there

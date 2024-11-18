@@ -33,8 +33,7 @@
     awscli2
     feh
     smplayer
-    cargo
-    rust-analyzer
+    rustup
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

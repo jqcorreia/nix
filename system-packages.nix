@@ -36,7 +36,8 @@
       nix-prefetch
       terraform
       bitwarden-cli
-      vivaldi
+      unstable.mesa
+      unstable.vivaldi
     ];
   };
 }
