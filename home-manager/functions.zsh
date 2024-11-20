@@ -56,11 +56,11 @@ function vpn() {
 }
 
 
-function tma() {
+function t() {
     tmux new -As $1
 }
 
-function tml() {
+function tl() {
     tmux ls
 }
 

@@ -8,6 +8,8 @@
     };
     defaultKeymap = "emacs";
     initExtra = ''
+      export PATH=$PATH:$HOME/.local/bin # Add this to account for binaries installed by other 'installers'. e.g pipx
+
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       source ${pkgs.fzf}/share/fzf/key-bindings.zsh
       source ${./.p10k.zsh}

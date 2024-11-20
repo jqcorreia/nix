@@ -16,6 +16,7 @@ in
   imports = [
     ./hardware-configuration.nix
     ./system-packages.nix
+    ./lsp.nix
   ];
 
   # Bootloader.
@@ -66,6 +67,7 @@ in
     extraGroups = [
       "networkmanager"
       "wheel"
+      "docker"
     ];
     shell = pkgs.zsh;
     ignoreShellProgramCheck = true;
@@ -174,7 +176,12 @@ in
     targets.multi-user.wants = [ "pritunl-client.service" ];
   };
 
-  # virtualisation.vmware.guest.enable = true
+  # Disable Extended DNS
+  networking.resolvconf.dnsExtensionMechanism = false;
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = true;
+  };
 
   # services.gnome.gnome-keyring.enable = true;
   # List services that you want to enable:

@@ -23,10 +23,7 @@
       ripgrep
       lua-language-server
       python312
-      unstable.ruff-lsp
-      unstable.pyright
-      unstable.neovim
-      unstable.terraform-ls
+      pipx
       nil
       nixfmt-rfc-style
       gcr
@@ -38,6 +35,7 @@
       bitwarden-cli
       unstable.mesa
       unstable.vivaldi
+      socat
     ];
   };
 }
