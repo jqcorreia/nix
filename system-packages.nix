@@ -7,6 +7,7 @@
       chezmoi
       git
       git-lfs
+      git-cliff
       tmux
       nodejs
       jq
@@ -36,6 +37,7 @@
       unstable.mesa
       unstable.vivaldi
       socat
+      btop
     ];
   };
 }

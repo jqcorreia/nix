@@ -39,6 +39,8 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
+    ".config/tmux/import_envs.sh".source = ./import_envs.sh;
+
     # This will set the mouse cursor default for all applications
     # ".local/share/icons/default/index.theme".text = ''
     #   [Icon Theme]
