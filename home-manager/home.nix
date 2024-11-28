@@ -44,10 +44,10 @@
     ".config/tmux/import_envs.sh".source = ./import_envs.sh;
 
     # This will set the mouse cursor default for all applications
-    # ".local/share/icons/default/index.theme".text = ''
-    #   [Icon Theme]
-    #   Inherits=phinger-cursors-dark
-    # '';
+    ".local/share/icons/default/index.theme".text = ''
+      [Icon Theme]
+      Inherits=phinger-cursors-dark
+    '';
   };
 
   home.sessionVariables = {
@@ -68,9 +68,17 @@
 
   gtk = {
     enable = true;
+    # theme = {
+    #   name = "Breeze-Dark";
+    #   package = pkgs.libsForQt5.breeze-gtk;
+    # };
     iconTheme = {
-      name = "Fluent";
-      package = pkgs.fluent-gtk-theme;
+      name = "Papirus-Dark";
+      package = pkgs.catppuccin-papirus-folders;
+    };
+    cursorTheme = {
+      name = "Catppuccin-Mocha-Light-Cursors";
+      package = pkgs.catppuccin-cursors.mochaLight;
     };
   };
 }
