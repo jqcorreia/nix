@@ -34,6 +34,8 @@
     feh
     smplayer
     rustup
+    pkg-config
+    d-spy
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
