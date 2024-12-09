@@ -38,6 +38,7 @@
       unstable.vivaldi
       socat
       btop
+      jq-lsp
     ];
   };
 }

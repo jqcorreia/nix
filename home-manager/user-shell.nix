@@ -46,6 +46,7 @@
       pbcopy = "xsel --clipboard --input";
       pbpaste = "xsel --clipboard --output";
       chez = "chezmoi";
+      ns = "nix-shell";
     };
   };
 
