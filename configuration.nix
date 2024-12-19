@@ -2,12 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{
-  config,
-  pkgs,
-  unstable,
-  ...
-}:
+{ config, pkgs, ... }:
 
 let
   sddm-theme = import ./sddm-theme.nix { inherit pkgs; };
@@ -21,6 +16,7 @@ in
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 20;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "vertex"; # Define your hostname.

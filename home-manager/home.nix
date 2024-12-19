@@ -36,6 +36,8 @@
     rustup
     pkg-config
     d-spy
+    tree-sitter
+    clang-tools
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

@@ -38,7 +38,9 @@
       unstable.vivaldi
       socat
       btop
-      jq-lsp
+      vscode-langservers-extracted
+      fd
+      wireguard-tools
     ];
   };
 }
