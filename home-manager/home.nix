@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   imports = [
@@ -43,6 +43,10 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
+    ".config/nvim/" = {
+      source = config.lib.file.mkOutOfStoreSymlink "/home/jqcorreia/nix/home-manager/nvim/";
+      recursive = true;
+    };
     ".config/tmux/import_envs.sh".source = ./import_envs.sh;
 
     # This will set the mouse cursor default for all applications
