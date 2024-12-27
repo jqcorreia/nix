@@ -22,7 +22,6 @@ if use_blink then
       -- your own keymap.
       keymap = {
         preset = 'default',
-        ['<Return>'] = { function(cmp) cmp.accept({ index = 1 }) end },
       },
 
       appearance = {
