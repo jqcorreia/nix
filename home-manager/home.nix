@@ -1,4 +1,9 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  ghostty,
+  ...
+}:
 
 {
   imports = [
@@ -38,6 +43,8 @@
     d-spy
     tree-sitter
     clang-tools
+    typescript-language-server
+    ghostty.packages.x86_64-linux.default
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

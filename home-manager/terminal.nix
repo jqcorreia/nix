@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  ghostty,
+  ...
+}:
 
 {
   programs.alacritty = {
