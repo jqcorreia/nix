@@ -41,6 +41,7 @@
       vscode-langservers-extracted
       fd
       wireguard-tools
+      ffmpeg
     ];
   };
 }
