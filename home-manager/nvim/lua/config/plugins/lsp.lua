@@ -11,6 +11,7 @@ local servers = {
   ruff_lsp = {},
   pyright = {},
   terraformls = {},
+  ols = {},
   nil_ls = {
     settings = {
       ["nil"] = {

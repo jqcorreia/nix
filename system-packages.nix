@@ -22,10 +22,8 @@
       SDL2_ttf
       SDL2_image
       ripgrep
-      lua-language-server
       python312
       pipx
-      nil
       nixfmt-rfc-style
       gcr
       home-manager
@@ -38,7 +36,6 @@
       unstable.vivaldi
       socat
       btop
-      vscode-langservers-extracted
       fd
       wireguard-tools
       ffmpeg

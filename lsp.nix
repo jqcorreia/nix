@@ -6,6 +6,11 @@
       unstable.pyright
       unstable.neovim
       unstable.clang-tools
+      unstable.ols
+      unstable.typescript-language-server
+      lua-language-server
+      nil
+      vscode-langservers-extracted
     ];
   };
 }
