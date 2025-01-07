@@ -45,6 +45,7 @@
     ghostty.packages.x86_64-linux.default
     firefox
     ranger
+    cloc
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
