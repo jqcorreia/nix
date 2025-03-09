@@ -11,6 +11,8 @@
       lua-language-server
       nil
       vscode-langservers-extracted
+      unstable.ruff
+      unstable.gopls
     ];
   };
 }

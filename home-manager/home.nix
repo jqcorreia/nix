@@ -2,9 +2,22 @@
   pkgs,
   config,
   ghostty,
+  unstable,
   ...
 }:
-
+let
+  odin_updated = pkgs.odin.overrideAttrs (
+    finalAttrs: previousAttrs: {
+      version = "dev-2025-01";
+      src = pkgs.fetchFromGitHub {
+        owner = "odin-lang";
+        repo = "Odin";
+        rev = "2aae4cfd461860bd10dcb922f867c98212a11449";
+        hash = "sha256-GXea4+OIFyAhTqmDh2q+ewTUqI92ikOsa2s83UH2r58=";
+      };
+    }
+  );
+in
 {
   imports = [
     ./terminal.nix
@@ -34,7 +47,8 @@
     grim
     slurp
     wl-clipboard
-    poetry
+    # unstable.poetry
+    # unstable.poetryPlugins.poetry-plugin-shell
     awscli2
     feh
     smplayer
@@ -43,9 +57,14 @@
     d-spy
     tree-sitter
     ghostty.packages.x86_64-linux.default
-    firefox
+    unstable.firefox
+    unstable.google-chrome
     ranger
     cloc
+    odin_updated
+    conftest
+    unstable.ruff
+    gopls
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

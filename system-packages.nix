@@ -39,6 +39,9 @@
       fd
       wireguard-tools
       ffmpeg
+      mpv
+      glfw
+      hyprlock
     ];
   };
 }

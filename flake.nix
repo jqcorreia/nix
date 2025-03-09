@@ -27,7 +27,6 @@
               config.allowUnfree = true;
             }
           );
-
     in
     {
       nixosConfigurations.default = nixpkgs.lib.nixosSystem {
