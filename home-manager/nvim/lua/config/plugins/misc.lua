@@ -28,17 +28,12 @@ return {
   "tpope/vim-surround",
   -- Silly training game
   "ThePrimeagen/vim-be-good",
-  -- Multi cursor support. Wonky but workable
-  {
-    "mg979/vim-visual-multi",
-    branch = "master",
-  },
   -- Maximize and restore window. Maps to <F3>
   "szw/vim-maximizer",
   {
     "NvChad/nvim-colorizer.lua",
     config = function()
-      require("colorizer").setup()
+      require("colorizer").setup({ filetypes = {} })
     end
   },
 

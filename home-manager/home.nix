@@ -65,6 +65,11 @@ in
     conftest
     unstable.ruff
     gopls
+    unstable.terraform
+    stremio
+    unstable.claude-code
+    terraform-docs
+    postgresql
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -74,7 +79,11 @@ in
       source = config.lib.file.mkOutOfStoreSymlink "/home/jqcorreia/nix/home-manager/nvim/";
       recursive = true;
     };
-    ".config/tmux/import_envs.sh".source = ./import_envs.sh;
+
+    ".config/tmux/" = {
+      source = config.lib.file.mkOutOfStoreSymlink "/home/jqcorreia/nix/home-manager/tmux/";
+      recursive = true;
+    };
 
     # This will set the mouse cursor default for all applications
     ".local/share/icons/default/index.theme".text = ''

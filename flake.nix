@@ -33,10 +33,17 @@
         specialArgs = {
           unstable = legacyPackages.x86_64-linux;
         };
-        modules = [
-          ./configuration.nix
-          inputs.home-manager.nixosModules.default
-        ];
+        modules =
+          let
+            common = {
+              nix.registry.nixpkgs.flake = nixpkgs;
+            };
+          in
+          [
+            common
+            ./configuration.nix
+            inputs.home-manager.nixosModules.default
+          ];
       };
     };
 }

@@ -1,0 +1,1 @@
+/nix/store/949qgij3jvc59aj6iqk1b9pr8giaaxd6-home-manager-files/.config/tmux/import_envs.sh
