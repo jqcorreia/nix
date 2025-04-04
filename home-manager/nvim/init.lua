@@ -64,8 +64,8 @@ require("lazy").setup({
 
         -- vim.cmd("colorscheme gruvbox")
       end,
-    }
-  }
+    },
+  },
 })
 
 vim.api.nvim_create_autocmd("Colorscheme", {
@@ -130,3 +130,27 @@ vim.keymap.set("n", "<leader>v", "<cmd> vnew <cr>", { desc = "Open [v]ertical [n
 vim.keymap.set("n", "<leader>ec", function()
   vim.cmd("e ~/.config/nvim/init.lua")
 end, { desc = "[E]dit [C]onfig" })
+
+function GoToDefinitionInSplit()
+  -- Check if there is already a split open
+  local win_count = #vim.api.nvim_list_wins()
+
+  if win_count == 1 then
+    -- No split exists, so create a new one
+    vim.cmd("vsplit")
+  else
+    vim.cmd("wincmd l") -- Move to the right split
+    vim.cmd("bd")
+    vim.cmd("vsplit")
+  end
+
+  -- Move to the new or existing split and go to definition
+  vim.cmd("wincmd l")      -- Move to the right split
+  vim.lsp.buf.definition() -- Run Go to Definition
+end
+
+-- Map it to a key (e.g., <leader>gd)
+-- vim.api.nvim_set_keymap("n", "<leader>gd", ":lua GoToDefinitionInSplit()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>gd", function()
+  vim.lsp.buf.definition({ reuse_win = false })
+end, { noremap = true, silent = true })
