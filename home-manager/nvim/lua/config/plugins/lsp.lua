@@ -1,6 +1,6 @@
 local is_nix
 
-if os.getenv("NIX_STORE") == nil then
+if os.getenv("NIX_PATH") == nil then
   is_nix = false
 else
   is_nix = true
@@ -125,16 +125,16 @@ end
 local dependencies
 
 if not is_nix then
-	dependencies = {
-		-- Useful status updates for LSP
-		-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-		"j-hui/fidget.nvim",
+  dependencies = {
+    -- Useful status updates for LSP
+    -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+    "j-hui/fidget.nvim",
 
-		-- Additional lua configuration, makes nvim stuff amazing!
-		"folke/lazydev.nvim",
-		"williamboman/mason.nvim",
-		"williamboman/mason-lspconfig.nvim",
-	}
+    -- Additional lua configuration, makes nvim stuff amazing!
+    "folke/lazydev.nvim",
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+  }
 else
   dependencies = {
     -- Useful status updates for LSP
@@ -150,27 +150,26 @@ return {
   "neovim/nvim-lspconfig",
   dependencies = dependencies,
   config = function()
+    if not is_nix then
+      local mason = require("mason")
+      local mason_lspconfig = require("mason-lspconfig")
 
-		if not is_nix then
-			local mason = require("mason")
-			local mason_lspconfig = require("mason-lspconfig")
+      mason.setup()
+      mason_lspconfig.setup({
+        ensure_installed = vim.tbl_keys(servers),
+      })
 
-			mason.setup()
-			mason_lspconfig.setup({
-				ensure_installed = vim.tbl_keys(servers),
-			})
-
-			-- 	mason_lspconfig.setup_handlers({
-			-- 	function(server_name)
-			-- 		require("lspconfig")[server_name].setup({
-			-- 			capabilities = capabilities,
-			-- 			on_attach = on_attach,
-			-- 			settings = servers[server_name],
-			-- 			filetypes = (servers[server_name] or {}).filetypes,
-			-- 			cmd = (servers[server_name] or {}).cmd,
-			-- 		})
-			-- 	end,
-			-- })
+      -- 	mason_lspconfig.setup_handlers({
+      -- 	function(server_name)
+      -- 		require("lspconfig")[server_name].setup({
+      -- 			capabilities = capabilities,
+      -- 			on_attach = on_attach,
+      -- 			settings = servers[server_name],
+      -- 			filetypes = (servers[server_name] or {}).filetypes,
+      -- 			cmd = (servers[server_name] or {}).cmd,
+      -- 		})
+      -- 	end,
+      -- })
     end
 
     vim.api.nvim_create_autocmd("LspAttach", { desc = "LSP actions", callback = on_attach })
