@@ -42,6 +42,7 @@
       mpv
       glfw
       hyprlock
+      libinput
     ];
   };
 }

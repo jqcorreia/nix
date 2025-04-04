@@ -51,13 +51,24 @@ in
     LC_TIME = "pt_PT.UTF-8";
   };
 
-  # Configure console keymap
-  # Set xkb features in order to have the same configuration in console by using console.useXkbConfig
-  services.xserver.xkb = {
-    layout = "pt";
-    options = "ctrl:nocaps";
+  services.xserver = {
+    videoDrivers = [ "nvidia" ];
+
+    # Configure console keymap
+    # Set xkb features in order to have the same configuration in console by using console.useXkbConfig
+    xkb = {
+      layout = "pt";
+      options = "ctrl:nocaps";
+    };
 
   };
+
+  services.libinput = {
+    enable = true;
+    touchpad.tapping = false;
+    touchpad.disableWhileTyping = true;
+  };
+
   console.useXkbConfig = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -96,9 +107,6 @@ in
   hardware.opengl = {
     enable = true;
   };
-
-  # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = [ "nvidia" ];
 
   services.displayManager = {
     defaultSession = "hyprland";
