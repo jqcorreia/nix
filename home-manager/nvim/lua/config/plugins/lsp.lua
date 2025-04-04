@@ -1,3 +1,11 @@
+local is_nix
+
+if os.getenv("NIX_STORE") == nil then
+  is_nix = false
+else
+  is_nix = true
+end
+
 local servers = {
   clangd = {
     cmd = {
@@ -8,17 +16,10 @@ local servers = {
   gopls = {},
   jsonls = { init_options = { provideFormatter = true } },
   rust_analyzer = {},
-  ruff_lsp = {},
+  ruff = {},
   pyright = {},
   terraformls = {},
   ols = {},
-  nil_ls = {
-    settings = {
-      ["nil"] = {
-        formatting = { command = { "nixfmt" } }
-      }
-    }
-  },
   ts_ls = {},
   lua_ls = {
     on_init = function(client)
@@ -62,6 +63,16 @@ local servers = {
     }
   }
 }
+
+if is_nix then
+  servers.nil_ls = {
+    settings = {
+      ["nil"] = {
+        formatting = { command = { "nixfmt" } }
+      }
+    }
+  }
+end
 
 local on_attach = function(args)
   local nmap = function(keys, func, desc)
@@ -111,30 +122,59 @@ local on_attach = function(args)
   nmap("gr", require("telescope.builtin").lsp_references, "[g]oto [r]eferences")
 end
 
-return {
-  -- LSP Configuration & Plugins
-  "neovim/nvim-lspconfig",
+local dependencies
+
+if not is_nix then
+	dependencies = {
+		-- Useful status updates for LSP
+		-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+		"j-hui/fidget.nvim",
+
+		-- Additional lua configuration, makes nvim stuff amazing!
+		"folke/lazydev.nvim",
+		"williamboman/mason.nvim",
+		"williamboman/mason-lspconfig.nvim",
+	}
+else
   dependencies = {
     -- Useful status updates for LSP
     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
     "j-hui/fidget.nvim",
     -- Additional lua configuration, makes nvim stuff amazing!
     { "folke/lazydev.nvim", ft = "lua" },
-  },
+  }
+end
+
+return {
+  -- LSP Configuration & Plugins
+  "neovim/nvim-lspconfig",
+  dependencies = dependencies,
   config = function()
-    -- local lspconfig_defaults = require('lspconfig').util.default_config
-    -- lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-    --     'force',
-    --     lspconfig_defaults.capabilities,
-    --     require('cmp_nvim_lsp').default_capabilities()
-    -- )
-    -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-    -- capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
-    vim.api.nvim_create_autocmd('LspAttach', { desc = "LSP actions", callback = on_attach })
+		if not is_nix then
+			local mason = require("mason")
+			local mason_lspconfig = require("mason-lspconfig")
 
+			mason.setup()
+			mason_lspconfig.setup({
+				ensure_installed = vim.tbl_keys(servers),
+			})
+
+			-- 	mason_lspconfig.setup_handlers({
+			-- 	function(server_name)
+			-- 		require("lspconfig")[server_name].setup({
+			-- 			capabilities = capabilities,
+			-- 			on_attach = on_attach,
+			-- 			settings = servers[server_name],
+			-- 			filetypes = (servers[server_name] or {}).filetypes,
+			-- 			cmd = (servers[server_name] or {}).cmd,
+			-- 		})
+			-- 	end,
+			-- })
+    end
+
+    vim.api.nvim_create_autocmd("LspAttach", { desc = "LSP actions", callback = on_attach })
     for server, config in pairs(servers) do
-      config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
       require("lspconfig")[server].setup(config)
     end
   end
