@@ -10,8 +10,8 @@ local servers = {
   clangd = {
     cmd = {
       "clangd",
-      "--fallback-style=webkit"
-    }
+      "--fallback-style=webkit",
+    },
   },
   gopls = {},
   jsonls = { init_options = { provideFormatter = true } },
@@ -20,34 +20,35 @@ local servers = {
   pyright = {},
   terraformls = {},
   ols = {},
+  glsl_analyzer = {},
   ts_ls = {},
   lua_ls = {
     on_init = function(client)
       if client.workspace_folders then
         local path = client.workspace_folders[1].name
-        if vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc') then
+        if vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc") then
           return
         end
       end
 
-      client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+      client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
         runtime = {
           -- Tell the language server which version of Lua you're using
           -- (most likely LuaJIT in the case of Neovim)
-          version = 'LuaJIT'
+          version = "LuaJIT",
         },
         -- Make the server aware of Neovim runtime files
         workspace = {
           checkThirdParty = false,
           library = {
-            vim.env.VIMRUNTIME
+            vim.env.VIMRUNTIME,
             -- Depending on the usage, you might want to add additional paths here.
             -- "${3rd}/luv/library"
             -- "${3rd}/busted/library",
-          }
+          },
           -- or pull in all of 'runtimepath'. NOTE: this is a lot slower and will cause issues when working on your own configuration (see https://github.com/neovim/nvim-lspconfig/issues/3189)
           -- library = vim.api.nvim_get_runtime_file("", true)
-        }
+        },
       })
     end,
     settings = {
@@ -58,19 +59,19 @@ local servers = {
         diagnostics = {
           disable = { "missing-fields" },
           globals = { "vim" },
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 }
 
 if is_nix then
   servers.nil_ls = {
     settings = {
       ["nil"] = {
-        formatting = { command = { "nixfmt" } }
-      }
-    }
+        formatting = { command = { "nixfmt" } },
+      },
+    },
   }
 end
 
@@ -97,23 +98,22 @@ local on_attach = function(args)
     return
   end
 
-  if client.supports_method('textDocument/rename') then
+  if client.supports_method("textDocument/rename") then
     -- Create a keymap for vim.lsp.buf.rename()
     nmap("<leader>rn", vim.lsp.buf.rename, "[r]e[n]ame")
   end
-  if client.supports_method('textDocument/implementation') then
+  if client.supports_method("textDocument/implementation") then
     -- Create a keymap for vim.lsp.buf.implementation
   end
   if client.supports_method("textDocument/formatting") then
-    vim.api.nvim_create_autocmd('BufWritePre', {
+    vim.api.nvim_create_autocmd("BufWritePre", {
       buffer = args.buf,
       desc = "Format on save",
       callback = function()
         vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
-      end
+      end,
     })
   end
-
 
   nmap("<leader>ca", vim.lsp.buf.code_action, "[c]ode [a]ction")
   vmap("<leader>ca", vim.lsp.buf.code_action, "[c]ode [a]ction")
@@ -176,5 +176,5 @@ return {
     for server, config in pairs(servers) do
       require("lspconfig")[server].setup(config)
     end
-  end
+  end,
 }

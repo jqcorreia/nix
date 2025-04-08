@@ -26,6 +26,8 @@ return {
           "terraform",
           "hcl",
           "json",
+          "odin",
+          "glsl",
         },
 
         -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
@@ -88,5 +90,5 @@ return {
         },
       })
     end, 0)
-  end
+  end,
 }
