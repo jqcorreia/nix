@@ -46,6 +46,7 @@ if not vim.loop.fs_stat(lazypath) then
     lazypath,
   })
 end
+
 vim.opt.rtp:prepend(lazypath)
 
 -- Install plugins
@@ -154,3 +155,8 @@ end
 vim.keymap.set("n", "<leader>gd", function()
   vim.lsp.buf.definition({ reuse_win = false })
 end, { noremap = true, silent = true })
+
+-- Turn diagnositics on
+vim.diagnostic.config({
+  virtual_text = true,
+})
