@@ -43,6 +43,7 @@
       glfw
       hyprlock
       libinput
+      devenv
     ];
   };
 }

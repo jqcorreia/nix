@@ -47,6 +47,7 @@
       pbpaste = "xsel --clipboard --output";
       chez = "chezmoi";
       ns = "nix-shell";
+      dv = "devenv";
     };
   };
 
