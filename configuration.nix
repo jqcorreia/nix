@@ -11,7 +11,6 @@ in
   imports = [
     ./hardware-configuration.nix
     ./system-packages.nix
-    ./lsp.nix
   ];
 
   # Bootloader.

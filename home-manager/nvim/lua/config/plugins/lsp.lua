@@ -22,6 +22,7 @@ local servers = {
   ols = {},
   glsl_analyzer = {},
   ts_ls = {},
+  glsl_analyzer = {},
   lua_ls = {
     on_init = function(client)
       if client.workspace_folders then
@@ -76,6 +77,24 @@ if is_nix then
 end
 
 local on_attach = function(args)
+  local function goto_def_split()
+    -- Check if there is already a split open
+    local win_count = #vim.api.nvim_list_wins()
+
+    if win_count == 1 then
+      -- No split exists, so create a new one
+      vim.cmd("vsplit")
+    else
+      vim.cmd("wincmd l") -- Move to the right split
+      vim.cmd("bd")
+      vim.cmd("vsplit")
+    end
+
+    -- Move to the new or existing split and go to definition
+    vim.cmd("wincmd l")      -- Move to the right split
+    vim.lsp.buf.definition() -- Run Go to Definition
+  end
+
   local nmap = function(keys, func, desc)
     if desc then
       desc = "lsp: " .. desc
@@ -115,6 +134,8 @@ local on_attach = function(args)
     })
   end
 
+
+  nmap("<leader>gd", goto_def_split, "[g]oto [d]efinition split")
   nmap("<leader>ca", vim.lsp.buf.code_action, "[c]ode [a]ction")
   vmap("<leader>ca", vim.lsp.buf.code_action, "[c]ode [a]ction")
 

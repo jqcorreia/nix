@@ -23,6 +23,7 @@ in
     ./terminal.nix
     ./user-shell.nix
     ./desktop-environment.nix
+    ./lsp.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -64,7 +65,6 @@ in
     odin_updated
     conftest
     unstable.ruff
-    gopls
     unstable.terraform
     stremio
     unstable.claude-code
