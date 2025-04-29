@@ -1,14 +1,14 @@
 -- Autocompletion
-local use_blink = true
+local use_blink = false
 
 if use_blink then
   return {
-    'saghen/blink.cmp',
+    "saghen/blink.cmp",
     -- optional: provides snippets for the snippet source
-    dependencies = 'rafamadriz/friendly-snippets',
+    dependencies = "rafamadriz/friendly-snippets",
 
     -- use a release tag to download pre-built binaries
-    version = 'v0.*',
+    version = "v1.*",
     -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
     -- build = 'cargo build --release',
     -- If you use nix, you can build from source using latest nightly rust with:
@@ -21,7 +21,7 @@ if use_blink then
       -- see the "default configuration" section below for full documentation on how to define
       -- your own keymap.
       keymap = {
-        preset = 'default',
+        preset = "default",
       },
 
       appearance = {
@@ -31,26 +31,25 @@ if use_blink then
         use_nvim_cmp_as_default = true,
         -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
         -- Adjusts spacing to ensure icons are aligned
-        nerd_font_variant = 'mono'
+        nerd_font_variant = "mono",
       },
 
       -- default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, via `opts_extend`
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        default = { "lsp", "path", "snippets", "buffer" },
         -- optionally disable cmdline completions
         -- cmdline = {},
       },
 
-      signature = { enabled = true }
+      signature = { enabled = true },
     },
     -- allows extending the providers array elsewhere in your config
     -- without having to redefine it
-    opts_extend = { "sources.default" }
+    opts_extend = { "sources.default" },
   }
 else
-  return
-  {
+  return {
     "hrsh7th/nvim-cmp",
     dependencies = {
       -- Adds LSP completion capabilities
@@ -86,15 +85,15 @@ else
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
           }),
-          ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-              -- elseif luasnip.expand_or_locally_jumpable() then
-              --     luasnip.expand_or_jump()
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
+          -- ["<Tab>"] = cmp.mapping(function(fallback)
+          --   if cmp.visible() then
+          --     cmp.select_next_item()
+          --     -- elseif luasnip.expand_or_locally_jumpable() then
+          --     --     luasnip.expand_or_jump()
+          --   else
+          --     fallback()
+          --   end
+          -- end, { "i", "s" }),
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
@@ -112,6 +111,6 @@ else
           { name = "luasnip" },
         },
       })
-    end
+    end,
   }
 end
