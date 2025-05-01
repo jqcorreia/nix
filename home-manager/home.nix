@@ -2,6 +2,7 @@
   pkgs,
   config,
   unstable,
+  inputs,
   ...
 }:
 let
@@ -68,6 +69,7 @@ in
     unstable.claude-code
     terraform-docs
     postgresql
+    inputs.zen-browser.packages.${pkgs.system}.default
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

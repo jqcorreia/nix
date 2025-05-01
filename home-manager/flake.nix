@@ -9,10 +9,16 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    zen-browser.url = "github:youwen5/zen-browser-flake";
   };
 
   outputs =
-    { nixpkgs, home-manager, ... }@inputs:
+    {
+      nixpkgs,
+      home-manager,
+      zen-browser,
+      ...
+    }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -39,6 +45,7 @@
         inherit pkgs;
         extraSpecialArgs = {
           unstable = legacyPackages.x86_64-linux;
+          inputs = inputs;
         };
 
         # Specify your home configuration modules here, for example,
