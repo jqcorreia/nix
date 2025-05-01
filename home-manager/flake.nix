@@ -9,18 +9,10 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    ghostty = {
-      url = "github:ghostty-org/ghostty";
-    };
   };
 
   outputs =
-    {
-      nixpkgs,
-      home-manager,
-      ghostty,
-      ...
-    }@inputs:
+    { nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -47,7 +39,6 @@
         inherit pkgs;
         extraSpecialArgs = {
           unstable = legacyPackages.x86_64-linux;
-          ghostty = ghostty;
         };
 
         # Specify your home configuration modules here, for example,

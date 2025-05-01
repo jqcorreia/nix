@@ -1,7 +1,6 @@
 {
   pkgs,
   config,
-  ghostty,
   unstable,
   ...
 }:
@@ -57,7 +56,6 @@ in
     pkg-config
     d-spy
     tree-sitter
-    ghostty.packages.x86_64-linux.default
     unstable.firefox
     unstable.google-chrome
     ranger

@@ -22,7 +22,7 @@
       SDL2_ttf
       SDL2_image
       ripgrep
-      python312
+      (python312.withPackages (ps: with ps; [ requests ]))
       pipx
       nixfmt-rfc-style
       gcr
