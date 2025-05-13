@@ -114,8 +114,8 @@ vim.keymap.set("n", "<M-j>", "<cmd> cnext <CR>", { desc = "Next item in quickfix
 vim.keymap.set("n", "<M-k>", "<cmd> cprev <CR>", { desc = "Previous item in quickfix" })
 
 -- misc
-vim.keymap.set("n", "-", function()
-  vim.cmd("Oil")
+vim.keymap.set("n", "\\", function()
+  vim.cmd("Neotree toggle")
 end)
 vim.keymap.set("n", "<leader>x", ":.lua<CR>")
 vim.keymap.set("v", "<leader>x", ":lua<CR>")
