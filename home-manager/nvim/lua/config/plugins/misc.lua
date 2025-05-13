@@ -36,5 +36,5 @@ return {
       require("colorizer").setup({ filetypes = {} })
     end
   },
-
+  "MeanderingProgrammer/render-markdown.nvim",
 }
