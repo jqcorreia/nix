@@ -19,7 +19,11 @@ local servers = {
   ruff = {},
   pyright = {},
   terraformls = {},
-  ols = {},
+  ols = {
+    init_options = {
+      checker_args = "-vet",
+    },
+  },
   glsl_analyzer = {},
   ts_ls = {},
   glsl_analyzer = {},
