@@ -1,7 +1,6 @@
 { pkgs, unstable, ... }:
 {
   home.packages = with pkgs; [
-    unstable.ruff-lsp
     unstable.pyright
     unstable.neovim
     unstable.clang-tools
