@@ -67,3 +67,17 @@ function tl() {
 function nvc() {
     nvim ~/.config/nvim/init.lua
 }
+
+function ush () {
+ if [ -d ".venv" ]
+ then
+  $SHELL -c "source .venv/bin/activate && $SHELL"
+ elif [ -d "venv" ]
+ then
+  $SHELL -c "source venv/bin/activate && $SHELL"
+ else
+  echo "No virtual environment found (looked for .venv and venv directories)"
+  echo "Create a virtual environment first with: uv venv"
+  return 1
+ fi
+}
