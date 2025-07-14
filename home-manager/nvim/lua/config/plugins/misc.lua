@@ -21,7 +21,7 @@ return {
         end,
         pattern = { "terraform", "hcl" },
       })
-    end
+    end,
   },
 
   -- Smart adding of surround quotes, parenteses, brackets, etc
@@ -34,7 +34,7 @@ return {
     "NvChad/nvim-colorizer.lua",
     config = function()
       require("colorizer").setup({ filetypes = {} })
-    end
+    end,
   },
-  "MeanderingProgrammer/render-markdown.nvim",
+  -- "MeanderingProgrammer/render-markdown.nvim",
 }
