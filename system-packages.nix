@@ -1,5 +1,10 @@
 { pkgs, unstable, ... }:
 {
+  programs.adb.enable = true;
+  users.users.jqcorreia = {
+    extraGroups = [ "adbusers" ];
+  };
+
   config = {
     environment.systemPackages = with pkgs; [
       bat

@@ -70,7 +70,7 @@ in
     terraform-docs
     postgresql
     inputs.zen-browser.packages.${pkgs.system}.default
-    uv
+    unstable.uv
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
