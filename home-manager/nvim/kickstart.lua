@@ -669,5 +669,16 @@ cmp.setup({
   },
 })
 
+-- Add custom filetypes for GLSL
+vim.filetype.add({
+  extension = {
+    vert = "glsl",
+    frag = "glsl",
+    geom = "glsl",
+    tesc = "glsl",
+    tese = "glsl",
+    comp = "glsl",
+  },
+})
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
