@@ -71,6 +71,10 @@ in
     postgresql
     inputs.zen-browser.packages.${pkgs.system}.default
     unstable.uv
+    seer
+    obs-studio
+    blender
+    renderdoc
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

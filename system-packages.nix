@@ -1,11 +1,11 @@
 { pkgs, unstable, ... }:
 {
-  programs.adb.enable = true;
-  users.users.jqcorreia = {
-    extraGroups = [ "adbusers" ];
-  };
 
   config = {
+    programs.adb.enable = true;
+    users.users.jqcorreia = {
+      extraGroups = [ "adbusers" ];
+    };
     environment.systemPackages = with pkgs; [
       bat
       wget
@@ -49,6 +49,7 @@
       hyprlock
       libinput
       devenv
+      libffi
     ];
   };
 }

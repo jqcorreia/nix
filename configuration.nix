@@ -163,6 +163,7 @@ in
   ];
 
   services.openssh.enable = true;
+  services.flatpak.enable = true;
 
   nix.settings.experimental-features = [
     "nix-command"
