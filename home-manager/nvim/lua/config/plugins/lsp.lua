@@ -6,80 +6,6 @@ else
   is_nix = true
 end
 
-local servers = {
-  clangd = {
-    cmd = {
-      "clangd",
-      "--fallback-style=webkit",
-    },
-  },
-  gopls = {},
-  jsonls = { init_options = { provideFormatter = true } },
-  rust_analyzer = {},
-  ruff = {},
-  pyright = {},
-  terraformls = {},
-  ols = {
-    init_options = {
-      checker_args = "-vet",
-    },
-  },
-  glsl_analyzer = {},
-  ts_ls = {},
-  glsl_analyzer = {},
-  lua_ls = {
-    on_init = function(client)
-      if client.workspace_folders then
-        local path = client.workspace_folders[1].name
-        if vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc") then
-          return
-        end
-      end
-
-      client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
-        runtime = {
-          -- Tell the language server which version of Lua you're using
-          -- (most likely LuaJIT in the case of Neovim)
-          version = "LuaJIT",
-        },
-        -- Make the server aware of Neovim runtime files
-        workspace = {
-          checkThirdParty = false,
-          library = {
-            vim.env.VIMRUNTIME,
-            -- Depending on the usage, you might want to add additional paths here.
-            -- "${3rd}/luv/library"
-            -- "${3rd}/busted/library",
-          },
-          -- or pull in all of 'runtimepath'. NOTE: this is a lot slower and will cause issues when working on your own configuration (see https://github.com/neovim/nvim-lspconfig/issues/3189)
-          -- library = vim.api.nvim_get_runtime_file("", true)
-        },
-      })
-    end,
-    settings = {
-      Lua = {
-        workspace = { checkthirdparty = false },
-        telemetry = { enable = false },
-        -- note: toggle below to ignore lua_ls's noisy `missing-fields` warnings
-        diagnostics = {
-          disable = { "missing-fields" },
-          globals = { "vim" },
-        },
-      },
-    },
-  },
-}
-
-if is_nix then
-  servers.nil_ls = {
-    settings = {
-      ["nil"] = {
-        formatting = { command = { "nixfmt" } },
-      },
-    },
-  }
-end
-
 local on_attach = function(args)
   local function goto_def_split()
     -- Check if there is already a split open
@@ -133,7 +59,9 @@ local on_attach = function(args)
       buffer = args.buf,
       desc = "Format on save",
       callback = function()
-        vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
+        if not vim.g.disable_autoformat then
+          vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
+        end
       end,
     })
   end
@@ -170,6 +98,95 @@ else
   }
 end
 
+local function enable_lsps()
+  local servers = {
+    clangd = {
+      cmd = {
+        "clangd",
+        "--fallback-style=webkit",
+      },
+    },
+    gopls = {},
+    jsonls = { init_options = { provideFormatter = true } },
+    rust_analyzer = {},
+    ruff = {},
+    pyright = {},
+    terraformls = {},
+    ols = {
+      init_options = {
+        checker_args = "-vet",
+        enable_format = not vim.g.disable_autoformat,
+      },
+    },
+    ts_ls = {},
+    glsl_analyzer = {},
+    lua_ls = {
+      on_init = function(client)
+        if client.workspace_folders then
+          local path = client.workspace_folders[1].name
+          if vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc") then
+            return
+          end
+        end
+
+        client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
+          runtime = {
+            -- Tell the language server which version of Lua you're using
+            -- (most likely LuaJIT in the case of Neovim)
+            version = "LuaJIT",
+          },
+          -- Make the server aware of Neovim runtime files
+          workspace = {
+            checkThirdParty = false,
+            library = {
+              vim.env.VIMRUNTIME,
+              -- Depending on the usage, you might want to add additional paths here.
+              -- "${3rd}/luv/library"
+              -- "${3rd}/busted/library",
+            },
+            -- or pull in all of 'runtimepath'. NOTE: this is a lot slower and will cause issues when working on your own configuration (see https://github.com/neovim/nvim-lspconfig/issues/3189)
+            -- library = vim.api.nvim_get_runtime_file("", true)
+          },
+        })
+      end,
+      settings = {
+        Lua = {
+          workspace = { checkthirdparty = false },
+          telemetry = { enable = false },
+          -- note: toggle below to ignore lua_ls's noisy `missing-fields` warnings
+          diagnostics = {
+            disable = { "missing-fields" },
+            globals = { "vim" },
+          },
+        },
+      },
+    },
+  }
+
+  if is_nix then
+    servers.nil_ls = {
+      settings = {
+        ["nil"] = {
+          formatting = { command = { "nixfmt" } },
+        },
+      },
+    }
+  end
+  if vim.g._lsps_enabled then
+    return
+  end
+  vim.g._lsps_enabled = true
+
+  -- vim.lsp.config("*", {
+  --   on_attach = on_attach,
+  -- })
+
+  for server, config in pairs(servers) do
+    vim.lsp.config(server, config)
+    vim.lsp.enable(server)
+  end
+end
+
 return {
   -- LSP Configuration & Plugins
   "neovim/nvim-lspconfig",
@@ -183,23 +200,15 @@ return {
       mason_lspconfig.setup({
         ensure_installed = vim.tbl_keys(servers),
       })
-
-      -- 	mason_lspconfig.setup_handlers({
-      -- 	function(server_name)
-      -- 		require("lspconfig")[server_name].setup({
-      -- 			capabilities = capabilities,
-      -- 			on_attach = on_attach,
-      -- 			settings = servers[server_name],
-      -- 			filetypes = (servers[server_name] or {}).filetypes,
-      -- 			cmd = (servers[server_name] or {}).cmd,
-      -- 		})
-      -- 	end,
-      -- })
     end
 
     vim.api.nvim_create_autocmd("LspAttach", { desc = "LSP actions", callback = on_attach })
-    for server, config in pairs(servers) do
-      require("lspconfig")[server].setup(config)
-    end
+    -- Enable the LSPs on VimEnter in order to be able to lazy-load them and modify them with .nvim.lua
+    vim.api.nvim_create_autocmd("VimEnter", {
+      callback = function()
+        print("vimenter")
+        enable_lsps()
+      end,
+    })
   end,
 }
