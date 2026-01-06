@@ -21,7 +21,7 @@ local on_attach = function(args)
     end
 
     -- Move to the new or existing split and go to definition
-    vim.cmd("wincmd l")      -- Move to the right split
+    vim.cmd("wincmd l") -- Move to the right split
     vim.lsp.buf.definition() -- Run Go to Definition
   end
 
@@ -66,7 +66,6 @@ local on_attach = function(args)
     })
   end
 
-
   nmap("<leader>gd", goto_def_split, "[g]oto [d]efinition split")
   nmap("<leader>ca", vim.lsp.buf.code_action, "[c]ode [a]ction")
   vmap("<leader>ca", vim.lsp.buf.code_action, "[c]ode [a]ction")
@@ -98,7 +97,7 @@ else
   }
 end
 
-local function enable_lsps()
+local function get_lsps()
   local servers = {
     clangd = {
       cmd = {
@@ -175,15 +174,20 @@ local function enable_lsps()
   if vim.g._lsps_enabled then
     return
   end
-  vim.g._lsps_enabled = true
+  return servers
+end
+
+local function enable_lsps()
+  local servers = get_lsps()
 
   -- vim.lsp.config("*", {
   --   on_attach = on_attach,
   -- })
 
   for server, config in pairs(servers) do
-    vim.lsp.config(server, config)
-    vim.lsp.enable(server)
+    require("lspconfig")[server].setup({})
+    -- vim.lsp.config(server, config)
+    -- vim.lsp.enable(server)
   end
 end
 
@@ -198,7 +202,7 @@ return {
 
       mason.setup()
       mason_lspconfig.setup({
-        ensure_installed = vim.tbl_keys(servers),
+        ensure_installed = vim.tbl_keys(get_lsps()),
       })
     end
 
@@ -206,7 +210,6 @@ return {
     -- Enable the LSPs on VimEnter in order to be able to lazy-load them and modify them with .nvim.lua
     vim.api.nvim_create_autocmd("VimEnter", {
       callback = function()
-        print("vimenter")
         enable_lsps()
       end,
     })
