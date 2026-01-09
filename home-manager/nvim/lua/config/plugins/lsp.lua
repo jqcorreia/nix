@@ -185,9 +185,9 @@ local function enable_lsps()
   -- })
 
   for server, config in pairs(servers) do
-    -- require("lspconfig")[server].setup({})
-    vim.lsp.config(server, config)
-    vim.lsp.enable(server)
+    require("lspconfig")[server].setup(config)
+    -- vim.lsp.config(server, config)
+    -- vim.lsp.enable(server)
   end
 end
 
