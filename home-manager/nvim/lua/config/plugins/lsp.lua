@@ -21,7 +21,7 @@ local on_attach = function(args)
     end
 
     -- Move to the new or existing split and go to definition
-    vim.cmd("wincmd l") -- Move to the right split
+    vim.cmd("wincmd l")      -- Move to the right split
     vim.lsp.buf.definition() -- Run Go to Definition
   end
 
@@ -185,9 +185,9 @@ local function enable_lsps()
   -- })
 
   for server, config in pairs(servers) do
-    require("lspconfig")[server].setup({})
-    -- vim.lsp.config(server, config)
-    -- vim.lsp.enable(server)
+    -- require("lspconfig")[server].setup({})
+    vim.lsp.config(server, config)
+    vim.lsp.enable(server)
   end
 end
 
